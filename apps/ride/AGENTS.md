@@ -46,4 +46,5 @@ Docs: https://docs.expo.dev/eas/index.md
 - Modes: `src/lib/mode.ts` holds `AppMode` ('rider' | 'captain'), `MODE_HOME` and the last used mode (AsyncStorage `nouzl.ride.lastMode`, rider on first launch); `src/components/ModeSwitch.tsx` switches with `router.replace`.
 - Strings: this app's keys live in `src/i18n/{ar,en}.json` under `ride.*`, merged into the synced `@nouzl/i18n` by `src/lib/i18n.ts`; never add keys to the synced package.
 - Expo Go: the app includes expo-dev-client, so start with `npx expo start --go` for Expo Go; maps and background location (feature 6 onward) need a development build.
+- Tests: `src/**/*.test.{ts,tsx}` (jest-expo, `jest.config.js` maps `@/`); React Native Testing Library 14 `render` is async, so `await render(...)`.
 - Light theme only for now (navigation theme in `src/app/_layout.tsx`); dark mode is decided in feature 4.

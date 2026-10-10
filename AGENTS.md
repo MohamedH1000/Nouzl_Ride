@@ -18,13 +18,14 @@ Ride hailing for Saudi Arabia: one Expo app with a rider mode and a captain mode
 ## Commands
 
 ```bash
-npm install                 # install (runs patch-package)
+npm install                 # install (runs patch-package, sets up the husky hook)
 npm run ride                # Expo dev server (apps/ride)
 npm run typecheck           # tsc in every workspace
 npm run sync:mobile         # refresh synced packages from ../nouzl_mobile
 npm run check:synced        # fail if a synced package was edited here
-npm run lint                # expo lint (set up by /develop tooling)
-npm test                    # jest-expo (set up by /test)
+npm run lint                # expo lint in apps/ride
+npm run format              # prettier --write (format:check is the CI form)
+npm test                    # jest-expo, apps/ride only (synced packages are tested in nouzl_mobile)
 ```
 
 ## Specs
@@ -45,7 +46,11 @@ Stored in `docs/specs/`. Format: `docs/specs/NNNN-title.md` (or `NNNN-title/inde
 
 ## Tooling
 
-To be installed by `/develop tooling`: `expo lint` (eslint-config-expo flat config) + Prettier, synced packages ignored; husky + lint-staged pre-commit running format, lint and typecheck; jest-expo + React Native Testing Library (backend ride code uses Nouzl_Backend's Jest); GitHub Actions on push and PR (check synced, install, lint, typecheck, test), copied from nouzl_mobile's `ci.yml`.
+Installed: `expo lint` (eslint-config-expo flat config) + Prettier, synced packages ignored; husky + lint-staged pre-commit running format, lint and typecheck; jest-expo + React Native Testing Library (backend ride code uses Nouzl_Backend's Jest); GitHub Actions on push and PR (check synced, install, lint, typecheck, test), copied from nouzl_mobile's `ci.yml`.
+
+- Prettier: single quotes, 120 columns, trailing commas (`.prettierrc.json`); `.prettierignore` skips the synced packages, `*.md` and `.claude/`. CI also runs `npm run format:check`.
+- lint-staged has a root config plus `apps/ride/.lintstagedrc.json`, because ESLint must run from `apps/ride` to resolve `@/` paths.
+- Shared Jest setup lives at the root (`jest.native.base.js`, `jest.native.setup.js`, `babel.jest-dynamic-import.js`), copied from nouzl_mobile.
 
 ## Git
 
