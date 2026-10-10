@@ -1,0 +1,25 @@
+{
+  "name": "nouzl-ride",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "postinstall": "patch-package",
+    "ride": "npm run start --workspace=@nouzl/ride",
+    "sync:mobile": "node scripts/sync-mobile-packages.mjs",
+    "check:synced": "node scripts/check-synced-packages.mjs",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "patch-package": "^8.0.1"
+  },
+  "overrides": {
+    "react-native-css-interop": "0.2.6"
+  }
+}

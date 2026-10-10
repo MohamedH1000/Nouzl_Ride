@@ -1,0 +1,14 @@
+{
+  "name": "@nouzl/theme",
+  "version": "0.0.1",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "files": [
+    "src",
+    "tailwind-preset.js"
+  ],
+  "peerDependencies": {
+    "react-native": "*"
+  }
+}

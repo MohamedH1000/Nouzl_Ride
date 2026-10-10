@@ -1,0 +1,20 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "nouzl-ride-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "web",
+        "--prefix",
+        "apps/ride",
+        "--",
+        "--port",
+        "8084"
+      ],
+      "port": 8084,
+      "autoPort": true
+    }
+  ]
+}

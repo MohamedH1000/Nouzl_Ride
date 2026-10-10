@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "Nouzl Ride",
+    "slug": "nouzl-ride",
+    "description": "Ride anywhere in Saudi Arabia with a Nouzl captain, or drive and earn as one.",
+    "version": "1.0.0",
+    "runtimeVersion": {
+      "policy": "fingerprint"
+    },
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "nouzl-ride",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#f8f7fb",
+    "ios": {
+      "bundleIdentifier": "sa.nouzl.ride",
+      "supportsTablet": false,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "sa.nouzl.ride",
+      "adaptiveIcon": {
+        "backgroundColor": "#7e409a",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#f8f7fb",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 120,
+          "resizeMode": "contain"
+        }
+      ],
+      "expo-secure-store",
+      "expo-localization",
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}

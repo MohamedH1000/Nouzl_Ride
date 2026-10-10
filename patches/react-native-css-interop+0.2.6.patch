@@ -1,0 +1,19 @@
+diff --git a/node_modules/react-native-css-interop/dist/runtime/web/api.js b/node_modules/react-native-css-interop/dist/runtime/web/api.js
+index 45339c1..2f39c83 100644
+--- a/node_modules/react-native-css-interop/dist/runtime/web/api.js
++++ b/node_modules/react-native-css-interop/dist/runtime/web/api.js
+@@ -27,6 +27,14 @@ const cssInterop = (baseComponent, mapping) => {
+         for (const config of configs) {
+             const source = props[config.source];
+             if (typeof source === "string" && source) {
++                // Copy a style array before assignToTarget pushes into it. The
++                // array belongs to the caller, and React Compiler memoizes it
++                // across renders, so pushing grew it by one { $$css } entry per
++                // render and a toggled class (text-white -> text-text) never left.
++                const targetKey = config.target[0];
++                if (config.target.length === 1 && Array.isArray(props[targetKey])) {
++                    props[targetKey] = [...props[targetKey]];
++                }
+                 (0, shared_1.assignToTarget)(props, {
+                     $$css: true,
+                     [source]: source,

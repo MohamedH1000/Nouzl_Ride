@@ -1,0 +1,141 @@
+# Flows and Parent-Child Jobs
+
+## When to Use Flows
+
+Use `FlowProducer` when a parent must not become waitable until children finish successfully (or until configured failure policies resolve dependencies). Prefer a single processor with sequential steps only for tightly coupled local work. Prefer flows for cross-queue fan-out, aggregation, or deep dependency trees.
+
+`new FlowProducer(opts, backendFactory?)` — same `connection` / backend rules as Queue. `waitUntilReady()` is `Promise<void>`. `getBackend()` for datastore escape hatches.
+
+## Add a Flow
+
+```typescript
+import { FlowProducer } from 'bullmq';
+
+const flowProducer = new FlowProducer({ connection });
+
+const tree = await flowProducer.add({
+  name: 'renovate-interior',
+  queueName: 'renovate',
+  children: [
+    { name: 'paint', data: { place: 'ceiling' }, queueName: 'steps' },
+    { name: 'paint', data: { place: 'walls' }, queueName: 'steps' },
+    { name: 'floor', data: { place: 'floor' }, queueName: 'steps' },
+  ],
+});
+```
+
+Rules:
+
+- Parent and children may use different `queueName`s.
+- Add is atomic for the tree (`addBulk` is atomic across several trees).
+- Parent sits in `waiting-children` until children resolve, then moves to waiting/delayed/prioritized as appropriate.
+- Nodes without `opts.jobId` get a **UUID** (v6; not Redis incremental ids). Custom `jobId` still must not contain `:`.
+- **Deduplication is not allowed on nodes with children** (runtime: `Deduplication options cannot be used on flow nodes with children`). Leaf nodes may use `deduplication`.
+- All flow job opts omit `repeat`. Nested children also omit `parent`.
+- `debounce` is gone from JobsOptions; do not set it on flow nodes.
+
+Provide per-queue defaults via the second argument when needed:
+
+```typescript
+await flowProducer.add(
+  {
+    name: 'car',
+    queueName: 'assembly',
+    data: { step: 'engine' },
+    children: [{ name: 'car', data: { step: 'wheels' }, queueName: 'assembly' }],
+  },
+  {
+    queuesOptions: {
+      assembly: {
+        defaultJobOptions: { removeOnComplete: true },
+      },
+    },
+  },
+);
+```
+
+## Parent Reads Children
+
+```typescript
+import { Worker } from 'bullmq';
+
+const steps = new Worker('steps', async job => {
+  return 250;
+}, { connection });
+
+const renovate = new Worker('renovate', async job => {
+  const values = await job.getChildrenValues();
+  return Object.values(values).reduce((a: number, b: number) => a + b, 0);
+}, { connection });
+```
+
+Useful APIs: `getDependencies` / `getDependenciesCount` (processed, unprocessed, failed, ignored), `getIgnoredChildrenFailures()`, `getFailedChildrenValues()`, `flowProducer.getFlow({ queueName, id, prefix?, depth?, maxChildren? })`.
+
+## Serial Chains
+
+Nest children to force order (deepest child runs first):
+
+```typescript
+await flowProducer.add({
+  name: 'car',
+  data: { step: 'engine' },
+  queueName: 'assembly',
+  children: [
+    {
+      name: 'car',
+      data: { step: 'wheels' },
+      queueName: 'assembly',
+      children: [{ name: 'car', data: { step: 'chassis' }, queueName: 'assembly' }],
+    },
+  ],
+});
+```
+
+## Failure Policies
+
+Set these on the **child** `opts`. Default without them: parent stays blocked until children succeed.
+
+| Option | Behavior |
+| --- | --- |
+| `failParentOnFailure: true` | Fail parent when this child fails (lazy until a worker processes the parent; often `UnrecoverableError`). Can recurse up the tree. |
+| `ignoreDependencyOnFailure: true` | Drop dependency on fail; parent may proceed; inspect via `getIgnoredChildrenFailures()`. |
+| `removeDependencyOnFailure: true` | Remove dependency on fail; parent proceeds when no pending children remain. |
+| `continueParentOnFailure: true` | Parent can activate on child fail without waiting for siblings. Pair with `removeUnprocessedChildren()` / `getFailedChildrenValues()` when compensating. |
+
+```typescript
+children: [
+  {
+    name: 'critical-step',
+    queueName: 'steps',
+    data: {},
+    opts: { failParentOnFailure: true },
+  },
+  {
+    name: 'optional-step',
+    queueName: 'steps',
+    data: {},
+    opts: { ignoreDependencyOnFailure: true },
+  },
+]
+```
+
+## Runtime Children / Step Parents
+
+For saga-ish steps that spawn children mid-flight, persist step state with `job.updateData`, then `moveToWaitingChildren(token)` and throw `WaitingChildrenError` (does not burn `attemptsMade`). Always pass the lock `token` into move helpers.
+
+## Removal Rules
+
+When removing flow jobs:
+
+1. Removing a parent removes its children.
+2. Removing a child removes that dependency; if it was the last dependency, the parent can become ready.
+3. A job that is both parent and child applies both rules.
+4. If any job that would be removed is locked, removal fails and nothing is removed.
+
+## Debugging Tips
+
+- Inspect parent state `waiting-children` when parents never run.
+- Confirm every child queue has workers.
+- Verify failure options on the **child** `opts`, not only the parent.
+- If add throws about deduplication, move `deduplication` to a leaf (or enqueue a follow-up job from the parent processor).
+- Keep trees shallow unless the product truly needs deep nesting — ops and failure reasoning grow with depth.

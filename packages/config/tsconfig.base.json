@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "bundler",
+    "jsx": "react-native",
+    "baseUrl": ".",
+    "paths": {
+      "@nouzl/theme": ["../../packages/theme/src/tokens.ts"],
+      "@nouzl/i18n": ["../../packages/i18n/src/index.ts"],
+      "@nouzl/api": ["../../packages/api/src/index.ts"],
+      "@nouzl/auth": ["../../packages/auth/src/index.ts"],
+      "@nouzl/ui": ["../../packages/ui/src/index.ts"],
+      "@nouzl/types": ["../../packages/types/src/index.ts"]
+    }
+  }
+}

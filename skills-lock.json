@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "skills": {
+    "bullmq": {
+      "source": "dobroslavradosavljevic/skills",
+      "sourceType": "github",
+      "skillPath": "skills/bullmq/SKILL.md",
+      "computedHash": "31fba1fc03255ab301a54879d363c20097a0bc9693b02cc60313ea7ff6b10f8a"
+    },
+    "i18next-localization": {
+      "source": "i18next/i18next-cli",
+      "sourceType": "github",
+      "skillPath": "skills/i18next-localization/SKILL.md",
+      "computedHash": "b264788d7105224bc961cb5b436f6f9195ad2b4f6edfdb8d800cc6edde4cf29a"
+    },
+    "nestjs-best-practices": {
+      "source": "kadajett/agent-nestjs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/nestjs-best-practices/SKILL.md",
+      "computedHash": "29c326e77d1462ed9526996acae5da0cf4003146982abc8c67378f5dbad6b181"
+    },
+    "postgis": {
+      "source": "postgis/postgis",
+      "sourceType": "github",
+      "skillPath": "doc/skills/postgis/SKILL.md",
+      "computedHash": "b9590f5ababfcd131fabeeaa08ee8200b0d73ca6cfad29f1a8bdc29005a5b300"
+    },
+    "react-native-maps": {
+      "source": "gmi-software/better-skills",
+      "sourceType": "github",
+      "skillPath": "skills/react-native-maps/SKILL.md",
+      "computedHash": "318037786f884ef02f334c70fb4a965d281cd7eea967ca49c9d520c120c72e46"
+    },
+    "redis-connections": {
+      "source": "redis/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/redis-connections/SKILL.md",
+      "computedHash": "76dfa303eb4872e6fef13ca7d248dec6bfe6cafe3d8fb6d22f692cd2bb65bbea"
+    },
+    "sentry-react-native-sdk": {
+      "source": "getsentry/sentry-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/sentry-react-native-sdk/SKILL.md",
+      "computedHash": "89f79da0832352bc81dc6b168de23219874672b4400b3e8a14346fed24fc64c4"
+    },
+    "styling-nativewind-v4-expo": {
+      "source": "tristanmanchester/agent-skills",
+      "sourceType": "github",
+      "skillPath": "styling-nativewind-v4-expo/SKILL.md",
+      "computedHash": "dd58a6cfb61cb44e35384fb75bba7e5acffba4f8f56b2fb74c940503d03103f5"
+    },
+    "tanstack-query": {
+      "source": "tanstack-skills/tanstack-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/tanstack-query/skills/tanstack-query/SKILL.md",
+      "computedHash": "bfe2977e92667b84efeb4b12e5c3010807934aab2f7ac2b059241cd3da2a3e6e"
+    }
+  }
+}

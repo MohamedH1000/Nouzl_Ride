@@ -1,0 +1,23 @@
+{
+  "ride": {
+    "mode": {
+      "label": "Mode",
+      "rider": "Ride",
+      "captain": "Captain"
+    },
+    "rider": {
+      "rideTab": "Ride",
+      "rideTitle": "Where to?",
+      "rideBody": "Pick your destination, see the price before you book, and a nearby captain comes to you.",
+      "tripsTitle": "My trips",
+      "tripsEmpty": "No trips yet."
+    },
+    "captain": {
+      "driveTab": "Drive",
+      "driveTitle": "Go online",
+      "driveBody": "When you are online, ride requests near you show up here.",
+      "earningsTitle": "My earnings",
+      "earningsEmpty": "No earnings yet."
+    }
+  }
+}

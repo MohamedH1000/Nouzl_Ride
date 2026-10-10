@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Maps Tailwind's font-weight utilities onto Cairo's actual per-weight TTF
+ * files (see @nouzl/theme's applyDefaultFont.ts). A static font has no
+ * "bold variant" RN can synthesize from `font-weight` alone — every
+ * font-bold/font-semibold/font-extrabold in the app needs to resolve to a
+ * DIFFERENT loaded font family, not a heavier rendering of the same one.
+ * There is no 600 (semibold) weight shipped for Cairo, so semibold maps to
+ * the same 700 Bold file bold does — matches the web apps, which use the
+ * same two-tier bold-ish scale in practice (`font-semibold`/`font-bold`
+ * classes read identically there for the same reason: only 400/500/700/800
+ * were ever loaded).
+ */
+@layer utilities {
+  .font-normal {
+    font-family: 'Cairo_400Regular';
+  }
+  .font-medium {
+    font-family: 'Cairo_500Medium';
+  }
+  .font-semibold {
+    font-family: 'Cairo_700Bold';
+  }
+  .font-bold {
+    font-family: 'Cairo_700Bold';
+  }
+  .font-extrabold {
+    font-family: 'Cairo_800ExtraBold';
+  }
+}
