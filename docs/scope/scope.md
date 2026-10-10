@@ -16,7 +16,7 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 | # | Feature | Phase | Status |
 |---|---------|-------|--------|
 | 1 | Stack & architecture | Foundation | done |
-| 2 | Coding standards & tooling | Foundation | planned |
+| 2 | Coding standards & tooling | Foundation | in-progress |
 | 3 | Data model | Foundation | planned |
 | 4 | Design system & UI foundation | Foundation | planned |
 | 5 | Pricing & commission rules | Foundation | planned |
@@ -48,9 +48,10 @@ spec [0001](../specs/0001-stack-architecture/index.md) · code in `apps/ride`, `
 - [x] Decide the stack (spec): `/architect stack & architecture`
 - [x] Scaffold from the decision: `/develop stack & architecture`
 
-### 2. Coding standards & tooling
+### 2. Coding standards & tooling · in-progress
 Capture conventions and tooling from the real scaffolded repo, in line with the other Nouzl repos.
 **Done when:** `AGENTS.md` reflects the real stack, and lint, format and type checks run in CI.
+code in `apps/ride/eslint.config.js`, `apps/ride/jest.config.js`, `.prettierrc.json`, `.husky/`, `.github/workflows/ci.yml`
 - [ ] Capture conventions + tooling choices: `/audit`
 
 ### 3. Data model · needs a decision

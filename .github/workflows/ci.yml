@@ -1,0 +1,50 @@
+name: Ride CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Synced packages, lint, typecheck and tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Fails on any hand edit of the packages copied from nouzl_mobile (spec 0001).
+      # No dependencies, so it runs before npm ci.
+      - name: Check synced nouzl_mobile copies
+        run: npm run check:synced
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+
+      # patch-package runs as postinstall; HUSKY=0 skips git hook setup on CI.
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+        env:
+          HUSKY: 0
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck every workspace
+        run: npm run typecheck
+
+      # jest-expo only; no emulator or device tests.
+      - name: Test
+        run: npm test

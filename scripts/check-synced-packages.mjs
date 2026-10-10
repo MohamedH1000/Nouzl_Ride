@@ -44,4 +44,6 @@ if (problems.length > 0) {
   console.error('\nThese packages are copies of nouzl_mobile. Change them there, then run npm run sync:mobile.');
   process.exit(1);
 }
-console.log(`check-synced-packages: OK (${manifest.files.length} files from nouzl_mobile@${String(manifest.commit).slice(0, 7)})`);
+console.log(
+  `check-synced-packages: OK (${manifest.files.length} files from nouzl_mobile@${String(manifest.commit).slice(0, 7)})`,
+);

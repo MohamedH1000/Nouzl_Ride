@@ -1,0 +1,2 @@
+# LF everywhere, so Prettier, the synced hashes and CI agree on Windows too.
+* text=auto eol=lf

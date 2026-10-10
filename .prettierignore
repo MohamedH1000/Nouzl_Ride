@@ -1,0 +1,23 @@
+# Synced from nouzl_mobile: change them there, then npm run sync:mobile.
+packages/theme/
+packages/ui/
+packages/i18n/
+packages/auth/
+packages/api/
+packages/config/
+packages/types/
+
+# Generated or not ours.
+node_modules/
+.expo/
+dist/
+web-build/
+coverage/
+package-lock.json
+patches/
+expo-env.d.ts
+packages/SYNCED.json
+
+# Prose and vendored agent skills keep their own layout.
+*.md
+.claude/

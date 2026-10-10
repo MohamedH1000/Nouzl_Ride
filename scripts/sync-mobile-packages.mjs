@@ -41,7 +41,8 @@ for (const name of SYNCED_PACKAGES) {
   if (!existsSync(from)) fail(`nouzl_mobile has no packages/${name}`);
   for (const rel of listFiles(from)) {
     const buffer = readFileSync(join(from, rel));
-    if (buffer.toString('utf8').includes(MALWARE_MARKER)) fail(`packages/${name}/${rel} contains ${MALWARE_MARKER}; do not sync, investigate.`);
+    if (buffer.toString('utf8').includes(MALWARE_MARKER))
+      fail(`packages/${name}/${rel} contains ${MALWARE_MARKER}; do not sync, investigate.`);
     files.push({ path: `${name}/${rel}`, sha256: sha256(buffer) });
   }
 }
@@ -63,4 +64,6 @@ const manifest = {
   files,
 };
 writeFileSync(join(target, MANIFEST_NAME), JSON.stringify(manifest, null, 2) + '\n');
-console.log(`sync-mobile-packages: copied ${files.length} files from nouzl_mobile@${commit.slice(0, 7)} into packages/`);
+console.log(
+  `sync-mobile-packages: copied ${files.length} files from nouzl_mobile@${commit.slice(0, 7)} into packages/`,
+);

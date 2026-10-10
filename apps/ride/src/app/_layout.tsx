@@ -4,7 +4,13 @@ import { I18nextProvider } from 'react-i18next';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack, ThemeProvider, type Theme as NavigationTheme } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useFonts, Cairo_400Regular, Cairo_500Medium, Cairo_700Bold, Cairo_800ExtraBold } from '@expo-google-fonts/cairo';
+import {
+  useFonts,
+  Cairo_400Regular,
+  Cairo_500Medium,
+  Cairo_700Bold,
+  Cairo_800ExtraBold,
+} from '@expo-google-fonts/cairo';
 import { DirectionProvider } from '@nouzl/ui';
 import i18n, { syncNativeDirectionAtBoot } from '@nouzl/i18n';
 import { color, CAIRO_FONT_FAMILIES } from '@nouzl/theme';

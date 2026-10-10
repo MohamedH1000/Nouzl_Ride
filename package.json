@@ -11,13 +11,21 @@
     "sync:mobile": "node scripts/sync-mobile-packages.mjs",
     "check:synced": "node scripts/check-synced-packages.mjs",
     "lint": "npm run lint --workspaces --if-present",
-    "typecheck": "npm run typecheck --workspaces --if-present"
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "prepare": "husky",
+    "test": "npm run test --workspace=@nouzl/ride",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "engines": {
     "node": ">=20"
   },
   "devDependencies": {
-    "patch-package": "^8.0.1"
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "patch-package": "^8.0.1",
+    "prettier": "^3.9.10"
   },
   "overrides": {
     "react-native-css-interop": "0.2.6"
