@@ -17,7 +17,7 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 |---|---------|-------|--------|
 | 1 | Stack & architecture | Foundation | done |
 | 2 | Coding standards & tooling | Foundation | done |
-| 3 | Data model | Foundation | planned |
+| 3 | Data model | Foundation | in-progress |
 | 4 | Design system & UI foundation | Foundation | planned |
 | 5 | Pricing & commission rules | Foundation | planned |
 | 6 | Core ride loop | Slice 1 | planned |
@@ -54,10 +54,21 @@ Capture conventions and tooling from the real scaffolded repo, in line with the 
 code in `apps/ride/eslint.config.js`, `apps/ride/jest.config.js`, `.prettierrc.json`, `.husky/`, `.github/workflows/ci.yml`
 - [x] Capture conventions + tooling choices: `/audit`
 
-### 3. Data model · needs a decision
+### 3. Data model · in-progress
 Rides and their status history, routes, captains, vehicles, documents, match offers, payments, cash ledger, earnings, payouts, ratings, safety reports, lost items, and per country settings, with row level security.
 **Done when:** every later slice fits without a breaking migration, and a rider sees only their rides and a captain only theirs.
-- [ ] Design it (spec): `/architect data model`
+spec [0002](../specs/0002-data-model/index.md)
+code in `Nouzl_Backend/supabase/{migrations,probes,rollbacks}/20261011120000_ride_core*.sql`, `Nouzl_Backend/src/rides/ride-status-edges.spec.ts`, `Nouzl_Backend/scripts/check-ride-migrations.mjs`, `nouzl_rules/src/rideStatus.ts`
+- [x] Design it (spec): `/architect data model`
+- [ ] Build it: `/develop data model`
+  - [ ] Core migration: settings, people and ride tables with RLS, column grants and seed rows (AC-1, AC-2, AC-3, AC-4, AC-6, AC-8, AC-9, AC-10)
+  - [ ] Ride functions: create, transition, assign, complete, account status, purge, with actor and eligibility checks (AC-5, AC-7, AC-12, AC-13, AC-14)
+  - [ ] Probe, rollback, staging apply, advisor run and regenerated types (AC-1 to AC-10, AC-12 to AC-14)
+  - [x] Status unions and edge list in `nouzl_rules`, plus the additive migration CI check (AC-7, AC-11)
+- [ ] Verify it: `/check verify data model`
+- [ ] Test it: `/test data model`
+- [ ] Review it (fresh model): `/check review data model`
+- [ ] Document it: `/document data model`
 
 ### 4. Design system & UI foundation · needs a decision
 A visual language built on the Nouzl identity with its own ride character: maps, bottom sheets, captain card, an obvious emergency button, large captain buttons for use while driving, light and dark mode.
